@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Spongebob Case</title>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section">
+            <div class="message hidden" id="message">
+                <i style="height: 18px" data-feather="clipboard"></i>
+                <p>Transformed text was copiedto clipboard</p>
+            </div>
+            <h1 id="result"></h1>
+            <input type="text" name="textInput" id="textInput" placeholder="Type your message here">
+            <div class="end-section">
+                <p>Press t to start typing - Press Enter to to transform text</p>
+            </div>
+        </div>
+        <button id="submitButton" onclick="spongebobcase()">Submit</button>
+    </div>
+    <script>
+        feather.replace()
+    </script>
+</body>
+
+<script>
+    function spongebobcase() {
+        input = document.getElementById('textInput').value
+        heading = document.getElementById('result')
+        output = ''
+
+        input = input.toLowerCase();
+
+        for (let i = 0; i < input.length; i++) {
+            if (i % 2 == 0) {
+                output += input[i].toUpperCase();
+            } else {
+                output += input[i];
+            }
+        }
+        heading.innerHTML = output;
+        navigator.clipboard.writeText(output);
+        var popup = new Audio('./popup.mp3')
+        popup.play();
+        document.getElementById('message').classList.remove('hidden');
+    }
+
+    document.addEventListener('keyup', function (e) {
+        if (e.keyCode === 13) {
+            if (document.getElementById('textInput').value != '') {
+                e.preventDefault();
+                document.getElementById('submitButton').click();
+            }
+        }
+        if (e.keyCode === 84) {
+            e.preventDefault();
+            document.getElementById('textInput').focus();
+        }
+        if (e.keyCode === 27) {
+            e.preventDefault();
+            document.getElementById('textInput').blur();
+        }
+    })
+
+    window.onload = function () {
+        document.getElementById('textInput').focus();
+    }
+</script>
+
+
+</html>
